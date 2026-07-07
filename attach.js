@@ -1,5 +1,5 @@
 ﻿/*!
- * Attach component v1.0
+ * Attach component v1.0.3
  *
  * @author Serge Galich <gaserge@mail.ru>
  * @copyright 2025
@@ -9,15 +9,15 @@
  * @requires Qu
  */
 
-(function(global) {
+(function(window, document) {
     'use strict';
     
     const LIB_NAME = 'Attach';
     const DATA_PREFIX = 'qu-attach';
     const QU_PREFIX = 'qu';
 
-    if (global.Qu && global.Qu[LIB_NAME]) {
-        global.Qu.debug(`⚠️ [${LIB_NAME}] Already registered, skipping duplicate`);
+    if (window.Qu && window.Qu[LIB_NAME]) {
+        window.Qu.debug(`⚠️ [${LIB_NAME}] Already registered, skipping duplicate`);
         return;
     }
 
@@ -101,7 +101,6 @@
         el.removeAttribute(`data-${prefix}-${name}`);
     };
 
-    // Вспомогательный метод для получения имени атрибута (для селекторов)
     Constructor._getDataAttrName = function(name, prefix = DATA_PREFIX) {
         return `data-${prefix}-${name}`;
     };
@@ -200,11 +199,11 @@
     };
 
     Constructor.extend = function () {
-        if (Array.isArray(global[LIB_NAME + 'Extend'])) {
-          global[LIB_NAME + 'Extend'].forEach((fn) => {
+        if (Array.isArray(window[LIB_NAME + 'Extend'])) {
+          window[LIB_NAME + 'Extend'].forEach((fn) => {
             Constructor.use(fn);
           });
-          global[LIB_NAME + 'Extend'] = [];
+          window[LIB_NAME + 'Extend'] = [];
         }
     };
 
@@ -893,11 +892,11 @@
     };
     
 
-    if (global.Qu) {
-        global.Qu.lib(LIB_NAME, Constructor);
+    if (window.Qu) {
+        window.Qu.lib(LIB_NAME, Constructor);
     } else {
-        global._QuLibs = global._QuLibs || [];
-        global._QuLibs.push({ name: LIB_NAME, instance: Constructor });
+        window._QuLibs = window._QuLibs || [];
+        window._QuLibs.push({ name: LIB_NAME, instance: Constructor });
     }
 
-})(typeof window !== 'undefined' ? window : global);
+})(window, document);
