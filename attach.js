@@ -1,5 +1,5 @@
 ﻿/*!
- * Attach component v1.0.3
+ * Attach component v1.0.4
  *
  * @author Serge Galich <gaserge@mail.ru>
  * @copyright 2025
@@ -30,6 +30,7 @@
         parallelUpload: true,
 
         enableCaptcha: false,
+        captchaProvider: 'YaSmartCaptcha',
         captchaAction: 'upload_file',
 
         enableCaptchaForRemove: false,
@@ -181,13 +182,17 @@
                 }
             }
         },
-
-        get GreCaptcha() {
-            if (Qu && Qu.GreCaptcha) {
-                return Qu.GreCaptcha;
+        
+        trigger: function(el, ev, opts) {
+            if (Qu && Qu.trigger) {
+                return Qu.trigger(el, ev, opts);
             }
+        },
 
-            return null;
+        get Captcha() {
+            return function(name) {
+                return Qu ? Qu[name] : null;
+            }
         },
     };
 
@@ -287,8 +292,12 @@
         extendConfigFromData: function(container) {
 
             const parentForm = container.closest('form');
-            if (parentForm && Constructor._Qu.GreCaptcha && parentForm.hasAttribute(Constructor._Qu.GreCaptcha._config.selector)) {
-                this._config.enableCaptcha = true;
+            const providerName = this._config.captchaProvider;
+            if (providerName) {
+                const captcha = Constructor._Qu.Captcha(providerName);
+                if (parentForm && captcha && parentForm.hasAttribute(captcha._config.selector)) {
+                    this._config.enableCaptcha = true;
+                }
             }
 
             for (let key in container.dataset) {
@@ -484,29 +493,26 @@
             return formData;
         },
 
-        async getCaptchaToken(_action) {
-            const greCaptcha = Constructor._Qu.GreCaptcha;
-            
-            const parentForm = this.container.closest('form');
+        async getCaptchaToken(action) {
+            const providerName = this._config.captchaProvider || 'YaSmartCaptcha';
+            const captcha = Constructor._Qu.Captcha(providerName);
 
-            if (
-                greCaptcha &&
-                greCaptcha._config.enabled &&
-                greCaptcha._config.siteKey !== '' &&
-                parentForm.hasAttribute(greCaptcha._config.selector)
-            ) {
-                try {
-                    const action = _action || 'upload_file';
-                    const token = await greCaptcha.check(action);
-                    
-                    return token;
-                } catch (error) {
-                    console.error(`❌ [${LIB_NAME}] Captcha error:`, error);
-                    throw new Error('Captcha error');
-                }
+            if (!captcha || !captcha._config || !captcha._config.enabled || !captcha._config.siteKey) {
+                return null;
             }
-            
-            return null;
+
+            const form = this.container.closest('form');
+            if (!form || !form.hasAttribute(captcha._config.selector)) {
+                return null;
+            }
+
+            try {
+                const token = await captcha.check(this._config.captchaAction || 'upload_file');
+                return token;
+            } catch (error) {
+                console.error(`❌ [${LIB_NAME}] Captcha error:`, error);
+                throw new Error('Captcha error');
+            }
         },
 
 
@@ -522,11 +528,23 @@
                 formData.append(this._config.filesInputName, this.input.name);
                 
                 if (token) {
-                    formData.append(Constructor._Qu.GreCaptcha?._config?.tokenInput || 'g-recaptcha-response', token);
+                    const providerName = this._config.captchaProvider;
+                    const captcha = Constructor._Qu.Captcha(providerName);
+                    const tokenInput = captcha?._config?.tokenInput || 'smart-token';
+                    formData.append(tokenInput, token);
                     Constructor.debug(`🔑 [${LIB_NAME}] Adding captcha token to upload request`);
                 }
                 
                 this.additionalInputs(formData);
+
+                Constructor._Qu.trigger(this.container, 'attach:beforeUpload', {
+                    detail: {
+                        instance: this,
+                        file: file,
+                        formData: formData,
+                        config: this._config
+                    }
+                });
                 
                 const response = await fetch(this._config.uploadUrl, {
                     method: 'POST',
@@ -539,6 +557,16 @@
                     file: file,
                     this: this,
                 })
+
+                        
+                Constructor._Qu.trigger(this.container, 'attach:afterUpload', {
+                    detail: {
+                        instance: this,
+                        file: file,
+                        result: result,
+                        success: result.success
+                    }
+                });
                 
                 if (result.success) {
 
@@ -802,19 +830,37 @@
                     const token = await this.getCaptchaToken(this._config.removeCaptchaAction);
                     
                     if (token) {
-                        formData.append(Constructor._Qu.GreCaptcha?._config?.tokenInput || 'g-recaptcha-response', token);
+                        const providerName = this._config.captchaProvider;
+                        const captcha = Constructor._Qu.Captcha(providerName);
+                        const tokenInput = captcha?._config?.tokenInput || 'smart-token';
+                        formData.append(tokenInput, token);
                         Constructor.debug(`🔑 [${LIB_NAME}] Adding captcha token to remove request`);
-                    } else {
-                        Constructor.debug(`⚠️ [${LIB_NAME}] Captcha required but no token received`);
                     }
                 }
                 
+                Constructor._Qu.trigger(this.container, 'attach:beforeRemove', {
+                    detail: {
+                        instance: this,
+                        file: file,
+                        formData: formData,
+                        config: this._config
+                    }
+                });
                 const response = await fetch(this._config.removeUrl, {
                     method: 'POST',
                     body: formData
                 });
                 
                 const result = await response.json();
+
+                Constructor._Qu.trigger(this.container, 'attach:afterRemove', {
+                    detail: {
+                        instance: this,
+                        file: file,
+                        result: result,
+                        success: result.success
+                    }
+                });
 
                 
                 Constructor.debug(`🚀 [${LIB_NAME}] remove fetch data`, {
@@ -835,6 +881,7 @@
                 }
             } catch (error) {
                 Constructor._Qu.Notifyer.error(`Network error: ${error.message}`);
+            } finally {
                 Constructor._Qu.loading(false, this.container);
             }
         },
