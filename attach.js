@@ -1,5 +1,5 @@
 ﻿/*!
- * Attach component v1.0.4
+ * Attach component v1.0.5
  *
  * @author Serge Galich <gaserge@mail.ru>
  * @copyright 2025
@@ -71,7 +71,7 @@
         this._config = Object.assign({}, _defaultConfig, params);
         this.files = [];
     };
-    //Constructor._debug = false; // true by default
+    Constructor._debug = false; // true by default
     Constructor.libName = LIB_NAME;
 
     // Универсальный метод для работы с data-атрибутами

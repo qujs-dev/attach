@@ -219,6 +219,7 @@ input[data-qu-attach-field]:focus {
 
 [data-qu-attach-tpl-buttons] button::before {
     display: inline-block;
+    font-family: sans-serif;
 }
 
 [data-qu-attach-tpl-up]::before {
