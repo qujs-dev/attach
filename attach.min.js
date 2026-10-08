@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Attach component v1.0.5
  *
  * @author Serge Galich <gaserge@mail.ru>
