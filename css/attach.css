@@ -173,6 +173,7 @@
 
 /* ========== ПОЛЕ ВВОДА (CAPTION) ========== */
 input[data-qu-attach-field] {
+    all: unset;
     display: block;
     width: 100%;
     padding: 8px;
@@ -197,6 +198,7 @@ input[data-qu-attach-field]:focus {
 }
 
 [data-qu-attach-tpl-buttons] button {
+    all: unset;
     flex: 1;
     padding: 6px;
     border: none;
