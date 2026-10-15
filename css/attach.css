@@ -1,388 +1,318 @@
-/* ========== CSS ПЕРЕМЕННЫЕ ========== */
-/* Светлая тема (по умолчанию) */
-:root {
-    --qu-attach-bg: #ffffff;
-    --qu-attach-border: #dee2e6;
-    --qu-attach-border-drop: #dee2e6;
-    --qu-attach-text: #212529;
-    --qu-attach-card-bg: #f8f9fa;
-    --qu-attach-thumb-bg: #e9ecef;
-    --qu-attach-thumb-text: #6c757d;
-    --qu-attach-input-bg: #ffffff;
-    --qu-attach-input-focus: #007bff;
-    --qu-attach-button-bg: #e9ecef;
-    --qu-attach-button-text: #495057;
-    --qu-attach-remove-bg: #c82333;
-    --qu-attach-up-bg: #007bff;
-    --qu-attach-down-bg: #28a745;
-    --qu-attach-copy-bg: #17a2b8;
-    --qu-attach-scrollbar-track: transparent;
-    --qu-attach-scrollbar-thumb: #dee2e6;
-    --qu-attach-scrollbar-thumb-hover: #c1c7cd;
-    --qu-attach-dropzone-border-width: 2px;
-    --qu-attach-dropzone-radius: 4px;
-}
+/* ============================================================
+   ATTACH
+   Структура — через QU-токены. Темы white/dark — identity.
+   ============================================================ */
 
-[data-qu-attach-theme="white"] {
-    --qu-attach-bg: rgba(255,255,255,0.1);
-    --qu-attach-border: rgba(0,0,0,0.1);
-    --qu-attach-border-drop: rgba(0,0,0,0.1);
-    --qu-attach-text: rgba(0,0,0,0.7);
-    --qu-attach-card-bg: rgba(0,0,0,0.02);
-    --qu-attach-thumb-bg: rgba(0,0,0,0.05);
-    --qu-attach-thumb-text: rgba(0,0,0,0.5);
-    --qu-attach-input-bg: rgba(255,255,255,0.7);
-    --qu-attach-input-focus: rgba(0,0,0,0.2);
-    --qu-attach-button-bg: rgba(0,0,0,0.05);
-    --qu-attach-button-text: #495057;
-    --qu-attach-remove-bg: #c82333;
-    --qu-attach-up-bg: #007bff;
-    --qu-attach-down-bg: #28a745;
-    --qu-attach-copy-bg: #17a2b8;
-    --qu-attach-scrollbar-track: transparent;
-    --qu-attach-scrollbar-thumb: rgba(0,0,0,0.1);
-    --qu-attach-scrollbar-thumb-hover: rgba(0,0,0,0.2);
-}
-
-/* Темная тема */
-[data-qu-attach-theme="dark"] {
-    --qu-attach-bg: rgba(255,255,255,0.05);
-    --qu-attach-border: rgba(255,255,255,0.2);
-    --qu-attach-border-drop: rgba(255,255,255,0.5);
-    --qu-attach-text: rgba(255,255,255,0.8);
-    --qu-attach-card-bg: rgba(0,0,0,0.8);
-    --qu-attach-thumb-bg: rgba(0,0,0,0.2);
-    --qu-attach-thumb-text: rgba(255,255,255,0.8);
-    --qu-attach-input-bg: rgba(255,255,255,0.05);
-    --qu-attach-input-focus: rgba(255,255,255,0.3);
-    --qu-attach-button-bg: rgba(255,255,255,0.05);
-    --qu-attach-button-text: rgba(255,255,255,0.7);
-    --qu-attach-remove-bg: #c82333;
-    --qu-attach-up-bg: #0056b3;
-    --qu-attach-down-bg: #28a745;
-    --qu-attach-copy-bg: #138496;
-    --qu-attach-scrollbar-track: transparent;
-    --qu-attach-scrollbar-thumb: rgba(255,255,255,0.2);
-    --qu-attach-scrollbar-thumb-hover: rgba(255,255,255,0.3);
-}
-
-/* ========== DROPZONE ========== */
-[data-qu-attach-dropzone] {
+   :root {
+    --qu-attach-bg:           var(--qu-attach-bg-custom,           var(--qu-color-bg));
+    --qu-attach-border:       var(--qu-attach-border-custom,       var(--qu-color-border));
+    --qu-attach-border-drop:  var(--qu-attach-border-drop-custom,  var(--qu-color-border));
+    --qu-attach-text:         var(--qu-attach-text-custom,         var(--qu-color-text));
+    --qu-attach-card-bg:      var(--qu-attach-card-bg-custom,      var(--qu-color-bg-soft));
+    --qu-attach-thumb-bg:     var(--qu-attach-thumb-bg-custom,     var(--qu-color-bg-strong));
+    --qu-attach-thumb-text:   var(--qu-attach-thumb-text-custom,   var(--qu-color-text-muted));
+    --qu-attach-input-bg:     var(--qu-attach-input-bg-custom,     var(--qu-color-bg));
+    --qu-attach-input-focus:  var(--qu-attach-input-focus-custom,  var(--qu-color-primary));
+    --qu-attach-button-bg:    var(--qu-attach-button-bg-custom,    var(--qu-color-bg-strong));
+    --qu-attach-button-text:  var(--qu-attach-button-text-custom,  var(--qu-color-text-muted));
+    --qu-attach-remove-bg:    var(--qu-attach-remove-bg-custom,    var(--qu-color-error));
+    --qu-attach-up-bg:        var(--qu-attach-up-bg-custom,        var(--qu-color-primary));
+    --qu-attach-down-bg:      var(--qu-attach-down-bg-custom,      var(--qu-color-success));
+    --qu-attach-copy-bg:      var(--qu-attach-copy-bg-custom,      var(--qu-color-info));
+  
+    --qu-attach-scrollbar-track:       var(--qu-attach-scrollbar-track-custom,       transparent);
+    --qu-attach-scrollbar-thumb:       var(--qu-attach-scrollbar-thumb-custom,       var(--qu-color-border));
+    --qu-attach-scrollbar-thumb-hover: var(--qu-attach-scrollbar-thumb-hover-custom, var(--qu-color-border-hover));
+  
+    --qu-attach-dropzone-border-width: var(--qu-attach-dropzone-border-width-custom, 2px);
+    --qu-attach-dropzone-radius: var(--qu-attach-dropzone-radius-custom, var(--qu-radius-sm));
+  }
+  
+  /* ============================================================
+     ТЕМА: white — идентичность, светлый полупрозрачный
+     ============================================================ */
+  [data-qu-attach-theme="white"] {
+    --qu-attach-bg-custom:                    rgba(255,255,255,0.1);
+    --qu-attach-border-custom:                rgba(0,0,0,0.1);
+    --qu-attach-border-drop-custom:           rgba(0,0,0,0.1);
+    --qu-attach-text-custom:                  rgba(0,0,0,0.7);
+    --qu-attach-card-bg-custom:               rgba(0,0,0,0.02);
+    --qu-attach-thumb-bg-custom:              rgba(0,0,0,0.05);
+    --qu-attach-thumb-text-custom:            rgba(0,0,0,0.5);
+    --qu-attach-input-bg-custom:              rgba(255,255,255,0.7);
+    --qu-attach-input-focus-custom:           rgba(0,0,0,0.2);
+    --qu-attach-button-bg-custom:             rgba(0,0,0,0.05);
+    --qu-attach-button-text-custom:           var(--qu-color-text);
+    --qu-attach-scrollbar-thumb-custom:       rgba(0,0,0,0.1);
+    --qu-attach-scrollbar-thumb-hover-custom: rgba(0,0,0,0.2);
+  }
+  
+  /* ============================================================
+     ТЕМА: dark — идентичность, тёмный полупрозрачный
+     ============================================================ */
+  [data-qu-attach-theme="dark"] {
+    --qu-attach-bg-custom:                    rgba(255,255,255,0.05);
+    --qu-attach-border-custom:                rgba(255,255,255,0.2);
+    --qu-attach-border-drop-custom:           rgba(255,255,255,0.5);
+    --qu-attach-text-custom:                  rgba(255,255,255,0.8);
+    --qu-attach-card-bg-custom:               rgba(0,0,0,0.8);
+    --qu-attach-thumb-bg-custom:              rgba(0,0,0,0.2);
+    --qu-attach-thumb-text-custom:            rgba(255,255,255,0.8);
+    --qu-attach-input-bg-custom:              rgba(255,255,255,0.05);
+    --qu-attach-input-focus-custom:           rgba(255,255,255,0.3);
+    --qu-attach-button-bg-custom:             rgba(255,255,255,0.05);
+    --qu-attach-button-text-custom:           rgba(255,255,255,0.7);
+    --qu-attach-up-bg-custom:                 color-mix(in srgb, var(--qu-color-primary), black 15%);
+    --qu-attach-copy-bg-custom:               color-mix(in srgb, var(--qu-color-info), black 15%);
+    --qu-attach-scrollbar-thumb-custom:       rgba(255,255,255,0.2);
+    --qu-attach-scrollbar-thumb-hover-custom: rgba(255,255,255,0.3);
+  }
+  
+  /* ============================================================
+     DROPZONE
+     ============================================================ */
+  [data-qu-attach-dropzone] {
     position: relative;
-    padding: 30px 20px;
+    padding: var(--qu-space-lg) var(--qu-space-md);
     border: var(--qu-attach-dropzone-border-width, 2px) dashed var(--qu-attach-border-drop);
-    border-radius: var(--qu-attach-dropzone-radius, 4px);
+    border-radius: var(--qu-attach-dropzone-radius, var(--qu-radius));
     background: var(--qu-attach-bg);
     color: var(--qu-attach-text);
     cursor: pointer;
     text-align: center;
-    transition: all 0.2s;
-}
-
-[data-qu-attach-dropzone] input[type="file"] {
-    display: none;
-}
-
-[data-qu-attach-dropzone]:hover,
-.dragover {
+    transition: var(--qu-transition);
+  }
+  
+  [data-qu-attach-dropzone] input[type="file"] { display: none; }
+  
+  [data-qu-attach-dropzone]:hover,
+  .dragover {
     border-color: var(--qu-attach-input-focus) !important;
-}
-
-/* ========== PREVIEWS GRID ========== */
-[data-qu-attach-previews] {
+  }
+  
+  /* ============================================================
+     PREVIEWS GRID
+     ============================================================ */
+  [data-qu-attach-previews] {
     display: grid;
     grid-template-rows: repeat(1, 1fr);
     grid-template-columns: repeat(var(--qu-attach-columns, 4), 1fr);
-    gap: 10px;
-}
-
-[data-qu-attach-previews]:not(:empty) {
-    padding: 10px 0;
-}
-
-[data-qu-attach-columns][data-qu-attach-previews] {
+    gap: var(--qu-space-sm);
+  }
+  [data-qu-attach-previews]:not(:empty) { padding: var(--qu-space-sm) 0; }
+  
+  [data-qu-attach-columns][data-qu-attach-previews] {
     --qu-attach-columns: attr(data-qu-attach-columns number);
-}
-
-@media (max-width: 960px) {
-    [data-qu-attach-previews] {
-        --qu-attach-columns: 3;
-    }
-
+  }
+  
+  @media (max-width: 960px) {
+    [data-qu-attach-previews] { --qu-attach-columns: 3; }
     [data-qu-attach-columns-md][data-qu-attach-previews] {
-        --qu-attach-columns: attr(data-qu-attach-columns-md number);
+      --qu-attach-columns: attr(data-qu-attach-columns-md number);
     }
-}
-
-@media (max-width: 768px) {
-    [data-qu-attach-previews] {
-        --qu-attach-columns: 2;
-    }
-
+  }
+  @media (max-width: 768px) {
+    [data-qu-attach-previews] { --qu-attach-columns: 2; }
     [data-qu-attach-columns-sm][data-qu-attach-previews] {
-        --qu-attach-columns: attr(data-qu-attach-columns-sm number);
+      --qu-attach-columns: attr(data-qu-attach-columns-sm number);
     }
-}
-
-@media (max-width: 460px) {
-    [data-qu-attach-previews] {
-        --qu-attach-columns: 1;
-    }
+  }
+  @media (max-width: 460px) {
+    [data-qu-attach-previews] { --qu-attach-columns: 1; }
     [data-qu-attach-columns-xs][data-qu-attach-previews] {
-        --qu-attach-columns: attr(data-qu-attach-columns-xs number);
+      --qu-attach-columns: attr(data-qu-attach-columns-xs number);
     }
-}
-
-/* ========== ЭЛЕМЕНТ СПИСКА ФАЙЛОВ ========== */
-[data-qu-attach-tpl-el] {
+  }
+  
+  /* ============================================================
+     ЭЛЕМЕНТ СПИСКА ФАЙЛОВ
+     ============================================================ */
+  [data-qu-attach-tpl-el] {
     width: 100%;
     background: var(--qu-attach-card-bg);
     border: 1px solid var(--qu-attach-border);
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: var(--qu-radius-sm);
+    padding: var(--qu-space-sm);
     color: var(--qu-attach-text);
     box-sizing: border-box;
-}
-
-/* ========== ПРЕВЬЮ (ИЗОБРАЖЕНИЕ/ИКОНКА) ========== */
-[data-qu-attach-thumb-field="thumb"] {
+  }
+  
+  /* ============================================================
+     ПРЕВЬЮ
+     ============================================================ */
+  [data-qu-attach-thumb-field="thumb"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100px;
     background: var(--qu-attach-thumb-bg);
-    border-radius: 5px;
+    border-radius: var(--qu-radius-sm);
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: var(--qu-space-sm);
     border: 1px solid var(--qu-attach-border);
     line-height: 0;
-}
-
-[data-qu-attach-thumb-field="thumb"] img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-[data-qu-attach-thumb-field="thumb"] span {
+  }
+  [data-qu-attach-thumb-field="thumb"] img {
+    width: 100%; height: 100%; object-fit: cover; margin: 0;
+  }
+  [data-qu-attach-thumb-field="thumb"] span {
     font-size: 40px;
     color: var(--qu-attach-thumb-text);
     font-weight: bold;
-}
-
-/* ========== ПОЛЕ ВВОДА (CAPTION) ========== */
-input[data-qu-attach-field] {
+  }
+  
+  /* ============================================================
+     ПОЛЕ ВВОДА (CAPTION)
+     ============================================================ */
+  input[data-qu-attach-field] {
     all: unset;
     display: block;
     width: 100%;
-    padding: 8px;
+    padding: var(--qu-space-sm);
     background: var(--qu-attach-input-bg);
     border: 1px solid var(--qu-attach-border);
-    border-radius: 5px;
+    border-radius: var(--qu-radius-sm);
     color: var(--qu-attach-text);
-    margin: 10px 0;
+    margin: var(--qu-space-sm) 0;
     box-sizing: border-box;
-}
-
-input[data-qu-attach-field]:focus {
+  }
+  input[data-qu-attach-field]:focus {
     outline: none;
     border-color: var(--qu-attach-input-focus);
     background: var(--qu-attach-input-bg);
-}
-
-/* ========== КНОПКИ ========== */
-[data-qu-attach-tpl-buttons] {
+  }
+  
+  /* ============================================================
+     КНОПКИ
+     ============================================================ */
+  [data-qu-attach-tpl-buttons] {
     display: flex;
-    gap: 5px;
-}
-
-[data-qu-attach-tpl-buttons] button {
+    gap: var(--qu-space-xs);
+  }
+  [data-qu-attach-tpl-buttons] button {
     all: unset;
     flex: 1;
-    padding: 6px;
+    padding: var(--qu-space-xs) var(--qu-space-sm);
     border: none;
-    border-radius: 5px;
+    border-radius: var(--qu-radius-sm);
     cursor: pointer;
     background: var(--qu-attach-button-bg);
     color: var(--qu-attach-button-text);
-    transition: background 0.2s;
+    transition: var(--qu-transition);
     margin: 0;
     max-width: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-
-[data-qu-attach-previews].is-moving [data-qu-attach-tpl-el] button {
-    /*pointer-events: none;*/
+    font-size: var(--qu-font-size-sm);
+  }
+  [data-qu-attach-previews].is-moving [data-qu-attach-tpl-el] button {
     transition: none;
-}
-
-[data-qu-attach-tpl-buttons] button::before {
+  }
+  [data-qu-attach-tpl-buttons] button::before {
     display: inline-block;
     font-family: sans-serif;
-}
-
-[data-qu-attach-tpl-up]::before {
-    content: '←';
-}
-
-[data-qu-attach-tpl-down]::before {
-    content: '→';
-}
-
-[data-qu-attach-tpl-copy]::before {
-    content: '🔗';
-}
-
-[data-qu-attach-tpl-remove]::before {
-    content: '×';
-}
-
-[data-qu-attach-tpl-up]:hover {
-    background: var(--qu-attach-up-bg) !important;
-    color: white;
-}
-
-[data-qu-attach-tpl-down]:hover {
-    background: var(--qu-attach-down-bg) !important;
-    color: white;
-}
-
-[data-qu-attach-tpl-copy]:hover {
-    background: var(--qu-attach-copy-bg) !important;
-    color: white;
-}
-
-[data-qu-attach-tpl-remove]:hover {
-    background: var(--qu-attach-remove-bg) !important;
-    color: white;
-}
-
-/* ========== РЕЖИМ СПИСКА (ВЕРТИКАЛЬНЫЙ) ========== */
-[data-qu-attach-mode="list"] [data-qu-attach-previews] {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-tpl-el] {
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-thumb-field="thumb"] {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    margin-bottom: 0;
-}
-[data-qu-attach-mode="list"] [data-qu-attach-thumb-field="thumb"] span {
-    font-size: 14px;
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-field="caption"] {
-    margin: 0;
-    flex: 1;
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-tpl-buttons] {
-    width: auto;
-    min-width: 160px;
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-tpl-up]::before {
-    content: '↑';
-}
-
-[data-qu-attach-mode="list"] [data-qu-attach-tpl-down]::before {
-    content: '↓';
-}
-
-/* ========== ГОРИЗОНТАЛЬНЫЙ РЕЖИМ ========== */
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews] {
+  }
+  [data-qu-attach-tpl-up]::before     { content: '←'; }
+  [data-qu-attach-tpl-down]::before   { content: '→'; }
+  [data-qu-attach-tpl-copy]::before   { content: '🔗'; }
+  [data-qu-attach-tpl-remove]::before { content: '×'; }
+  
+  [data-qu-attach-tpl-up]:hover     { background: var(--qu-attach-up-bg)     !important; color: var(--qu-color-on-accent); }
+  [data-qu-attach-tpl-down]:hover   { background: var(--qu-attach-down-bg)   !important; color: var(--qu-color-on-accent); }
+  [data-qu-attach-tpl-copy]:hover   { background: var(--qu-attach-copy-bg)   !important; color: var(--qu-color-on-accent); }
+  [data-qu-attach-tpl-remove]:hover { background: var(--qu-attach-remove-bg) !important; color: var(--qu-color-on-accent); }
+  
+  /* ============================================================
+     РЕЖИМ СПИСКА
+     ============================================================ */
+  [data-qu-attach-mode="list"] [data-qu-attach-previews] {
+    display: flex; flex-direction: column; gap: var(--qu-space-xs);
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-tpl-el] {
+    display: flex; align-items: stretch; gap: var(--qu-space-sm); width: 100%;
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-thumb-field="thumb"] {
+    width: 50px; height: 50px; min-width: 50px; margin-bottom: 0;
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-thumb-field="thumb"] span {
+    font-size: var(--qu-font-size-sm);
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-field="caption"] {
+    margin: 0; flex: 1;
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-tpl-buttons] {
+    width: auto; min-width: 160px;
+  }
+  [data-qu-attach-mode="list"] [data-qu-attach-tpl-up]::before   { content: '↑'; }
+  [data-qu-attach-mode="list"] [data-qu-attach-tpl-down]::before { content: '↓'; }
+  
+  /* ============================================================
+     ГОРИЗОНТАЛЬНЫЙ РЕЖИМ
+     ============================================================ */
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews] {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 15px;
+    gap: var(--qu-space-md);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: var(--qu-attach-scrollbar-thumb, #dee2e6) var(--qu-attach-scrollbar-track, transparent);
-}
-
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews]:not(:empty) {
-    padding-bottom: 10px;
-}
-
-[data-qu-attach-mode="horizontal"] [data-qu-attach-tpl-el] {
-    min-width: 200px;
-    width: 200px;
-    flex-shrink: 0;
-}
-
-/* Chrome, Safari, Edge */
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar {
+    scrollbar-color: var(--qu-attach-scrollbar-thumb) var(--qu-attach-scrollbar-track);
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews]:not(:empty) {
+    padding-bottom: var(--qu-space-sm);
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-tpl-el] {
+    min-width: 200px; width: 200px; flex-shrink: 0;
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar {
     height: 6px;
-}
-
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-track {
-    background: var(--qu-attach-scrollbar-track, transparent);
-}
-
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-thumb {
-    background: var(--qu-attach-scrollbar-thumb, #dee2e6);
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-track {
+    background: var(--qu-attach-scrollbar-track);
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-thumb {
+    background: var(--qu-attach-scrollbar-thumb);
     border-radius: 3px;
-}
-
-[data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-thumb:hover {
-    background: var(--qu-attach-scrollbar-thumb-hover, #c1c7cd);
-}
-
-.qu-attach-dropzone-circle {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.qu-attach-dropzone-circle-inner {
-    width: 60px;
-    height: 60px;
+  }
+  [data-qu-attach-mode="horizontal"] [data-qu-attach-previews]::-webkit-scrollbar-thumb:hover {
+    background: var(--qu-attach-scrollbar-thumb-hover);
+  }
+  
+  /* ============================================================
+     DROPZONE — доп. элементы
+     ============================================================ */
+  .qu-attach-dropzone-circle {
+    display: flex; justify-content: center; margin-bottom: var(--qu-space-md);
+  }
+  .qu-attach-dropzone-circle-inner {
+    width: 60px; height: 60px;
     background: var(--qu-attach-button-bg);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: var(--qu-radius-full);
+    display: flex; align-items: center; justify-content: center;
     font-size: 24px;
     color: var(--qu-attach-button-text);
-    transition: all 0.2s;
-}
-
-[data-qu-attach-dropzone-text] strong {
+    transition: var(--qu-transition);
+  }
+  [data-qu-attach-dropzone-text] strong {
     display: block;
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-[data-qu-attach-dropzone-text] span {
+    font-size: var(--qu-font-size-lg);
+    margin-bottom: var(--qu-space-xs);
+  }
+  [data-qu-attach-dropzone-text] span {
     color: var(--qu-attach-thumb-text);
-    font-size: 14px;
-}
-
-.qu-attach-dropzone-types {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-}
-
-.qu-attach-dropzone-type-badge {
-    padding: 4px 8px;
+    font-size: var(--qu-font-size-sm);
+  }
+  .qu-attach-dropzone-types {
+    display: flex; justify-content: center; gap: var(--qu-space-sm);
+    margin-top: var(--qu-space-md);
+  }
+  .qu-attach-dropzone-type-badge {
+    padding: var(--qu-space-xs) var(--qu-space-sm);
     background: var(--qu-attach-button-bg);
     color: var(--qu-attach-button-text);
-    border-radius: 4px;
-    font-size: 11px;
+    border-radius: var(--qu-radius-sm);
+    font-size: calc(var(--qu-font-size-sm) * 0.8);
     font-weight: bold;
-}
+  }

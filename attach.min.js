@@ -1,5 +1,5 @@
 /*!
- * Attach component v1.0.5
+ * Attach component v1.0.7
  *
  * @author Serge Galich <gaserge@mail.ru>
  * @copyright 2025
